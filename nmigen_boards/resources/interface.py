@@ -59,18 +59,23 @@ def IrDAResource(number, *, rx, tx, en=None, sd=None,
 def SPIResource(*args, cs, clk, mosi, miso, int=None, reset=None,
                 conn=None, attrs=None, role="host"):
     assert role in ("host", "device")
+    assert mosi is not None or miso is not None # support unidirectional SPI
 
     io = []
     if role == "host":
         io.append(Subsignal("cs", PinsN(cs, dir="o", conn=conn)))
         io.append(Subsignal("clk", Pins(clk, dir="o", conn=conn, assert_width=1)))
-        io.append(Subsignal("mosi", Pins(mosi, dir="o", conn=conn, assert_width=1)))
-        io.append(Subsignal("miso", Pins(miso, dir="i", conn=conn, assert_width=1)))
+        if mosi is not None:
+            io.append(Subsignal("mosi", Pins(mosi, dir="o", conn=conn, assert_width=1)))
+        if miso is not None:
+            io.append(Subsignal("miso", Pins(miso, dir="i", conn=conn, assert_width=1)))
     else:  # device
         io.append(Subsignal("cs", PinsN(cs, dir="i", conn=conn, assert_width=1)))
         io.append(Subsignal("clk", Pins(clk, dir="i", conn=conn, assert_width=1)))
-        io.append(Subsignal("mosi", Pins(mosi, dir="i", conn=conn, assert_width=1)))
-        io.append(Subsignal("miso", Pins(miso, dir="oe", conn=conn, assert_width=1)))
+        if mosi is not None:
+            io.append(Subsignal("mosi", Pins(mosi, dir="i", conn=conn, assert_width=1)))
+        if miso is not None:
+            io.append(Subsignal("miso", Pins(miso, dir="oe", conn=conn, assert_width=1)))
     if int is not None:
         if role == "host":
             io.append(Subsignal("int", Pins(int, dir="i", conn=conn)))
@@ -95,8 +100,7 @@ def I2CResource(*args, scl, sda, conn=None, attrs=None):
     return Resource.family(*args, default_name="i2c", ios=io)
 
 
-def DirectUSBResource(*args, d_p, d_n, pullup=None, vbus_valid=None,
-    conn=None, attrs=None):
+def DirectUSBResource(*args, d_p, d_n, pullup=None, vbus_valid=None, conn=None, attrs=None):
 
     io = []
     io.append(Subsignal("d_p", Pins(d_p, dir="io", conn=conn, assert_width=1)))
