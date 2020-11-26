@@ -56,21 +56,21 @@ def IrDAResource(number, *, rx, tx, en=None, sd=None,
     return Resource("irda", number, *io)
 
 
-def SPIResource(*args, cs, clk, mosi, miso, int=None, reset=None,
+def SPIResource(*args, cs_n, clk, mosi, miso, int=None, reset=None,
                 conn=None, attrs=None, role="host"):
     assert role in ("host", "device")
     assert mosi is not None or miso is not None # support unidirectional SPI
 
     io = []
     if role == "host":
-        io.append(Subsignal("cs", PinsN(cs, dir="o", conn=conn)))
+        io.append(Subsignal("cs", PinsN(cs_n, dir="o", conn=conn)))
         io.append(Subsignal("clk", Pins(clk, dir="o", conn=conn, assert_width=1)))
         if mosi is not None:
             io.append(Subsignal("mosi", Pins(mosi, dir="o", conn=conn, assert_width=1)))
         if miso is not None:
             io.append(Subsignal("miso", Pins(miso, dir="i", conn=conn, assert_width=1)))
     else:  # device
-        io.append(Subsignal("cs", PinsN(cs, dir="i", conn=conn, assert_width=1)))
+        io.append(Subsignal("cs", PinsN(cs_n, dir="i", conn=conn, assert_width=1)))
         io.append(Subsignal("clk", Pins(clk, dir="i", conn=conn, assert_width=1)))
         if mosi is not None:
             io.append(Subsignal("mosi", Pins(mosi, dir="i", conn=conn, assert_width=1)))

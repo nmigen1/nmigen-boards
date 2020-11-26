@@ -40,7 +40,7 @@ class DE10NanoPlatform(IntelPlatform):
 
         # LTC2308 analogue-to-digital converter
         SPIResource(0,
-            cs="U9", clk="V10", mosi="AC4", miso="AD4",
+            cs_n="U9", clk="V10", mosi="AC4", miso="AD4",
             attrs=Attrs(io_standard="3.3-V LVTTL")),
 
         # ADV7513 HDMI transmitter

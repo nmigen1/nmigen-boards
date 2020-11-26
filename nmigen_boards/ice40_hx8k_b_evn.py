@@ -29,7 +29,7 @@ class ICE40HX8KBEVNPlatform(LatticeICE40Platform):
         ),
 
         *SPIFlashResources(0,
-            cs="R12", clk="R11", mosi="P12", miso="P11",
+            cs_n="R12", clk="R11", mosi="P12", miso="P11",
             attrs=Attrs(IO_STANDARD="SB_LVCMOS")
         ),
     ]

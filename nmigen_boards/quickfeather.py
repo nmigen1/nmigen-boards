@@ -33,10 +33,10 @@ class QuickfeatherPlatform(QuicklogicPlatform):
         ),
 
         SPIResource(0,
-            cs="11", clk="20", mosi="16", miso="17"
+            cs_n="11", clk="20", mosi="16", miso="17"
         ),
         SPIResource(1,
-            cs="37", clk="40", mosi="36", miso="42",
+            cs_n="37", clk="40", mosi="36", miso="42",
             role="device"
         ),
 
