@@ -25,7 +25,7 @@ setup(
     ],
     packages=find_packages(),
     project_urls={
-        "Source Code": "https://github.com/nmigen/nmigen-boards",
-        "Bug Tracker": "https://github.com/nmigen/nmigen-boards/issues",
+        "Source Code": "https://gitlab.com/nmigen/nmigen-boards",
+        "Bug Tracker": "https://gitlab.com/nmigen/nmigen-boards/issues",
     },
 )
