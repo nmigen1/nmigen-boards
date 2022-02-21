@@ -6,12 +6,12 @@ from nmigen.build import *
 from nmigen.vendor.lattice_ecp5 import *
 from .resources import *
 
+__all__ = ["OrangeCrabR0_2_25k_Platform",
+           "OrangeCrabR0_2_85k_Platform"]
 
-__all__ = ["OrangeCrabR0_2Platform"]
 
-
-class OrangeCrabR0_2Platform(LatticeECP5Platform):
-    device      = "LFE5U-25F"
+# Base class for both OrangeCrab r0.2 boards
+class _OrangeCrabR0_2Platform(LatticeECP5Platform):
     package     = "MG285"
     speed       = "8"
     default_clk = "clk"
@@ -124,9 +124,21 @@ class OrangeCrabR0_2Platform(LatticeECP5Platform):
     def toolchain_program(self, products, name):
         dfu_util = os.environ.get("DFU_UTIL", "dfu-util")
         with products.extract("{}.bit".format(name)) as bitstream_filename:
-            subprocess.check_call([dfu_util, "-D", bitstream_filename])
+            # recent firmware has two USB endpoints. must select the first (-a0)
+            subprocess.check_call([dfu_util, "--alt", "0",
+                                   "-D", bitstream_filename])
 
 
+# Orangecrab revision 0.2 with the 25k ECP5
+class OrangeCrabR0_2_25k_Platform(_OrangeCrabR0_2Platform):
+    device      = "LFE5U-25F"
+
+# Orangecrab revision 0.2 with the 85k ECP5
+class OrangeCrabR0_2_85k_Platform(_OrangeCrabR0_2Platform):
+    device      = "LFE5U-85F"
+
+
+# convenient quick test: run as "python3 -m nmigen_bords.orangecrab_r0_2"
 if __name__ == "__main__":
-    from .test.blinky import *
-    OrangeCrabR0_2Platform().build(Blinky(), do_program=True)
+    from .test.blinky import Blinky
+    OrangeCrabR0_2_85k_Platform().build(Blinky(), do_program=True)
