@@ -2,9 +2,11 @@ import os
 import subprocess
 import shutil
 
-from nmigen.build import *
-from nmigen.vendor.lattice_ecp5 import *
-from .resources import *
+from nmigen.build import (Resource, Pins, Clock, Attrs, PinsN, Subsignal,
+                          DiffPairs, Connector)
+from nmigen.vendor.lattice_ecp5 import LatticeECP5Platform
+from .resources import (RGBLEDResource, ButtonResources, SPIFlashResources,
+                        SDCardResources, DirectUSBResource)
 
 __all__ = ["OrangeCrabR0_2_25k_Platform",
            "OrangeCrabR0_2_85k_Platform"]
