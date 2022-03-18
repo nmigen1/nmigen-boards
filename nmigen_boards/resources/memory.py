@@ -4,7 +4,7 @@ from nmigen.build import *
 __all__ = [
     "SPIFlashResources", "SDCardResources",
     "SRAMResource", "SDRAMResource", "NORFlashResources",
-    "DDR3Resource",
+    "DDR3Resource", "HyperRAMResource",
 ]
 
 
@@ -188,3 +188,31 @@ def DDR3Resource(*args, rst_n=None, clk_p, clk_n, clk_en, cs_n, we_n, ras_n, cas
         ios.append(attrs)
 
     return Resource.family(*args, default_name="ddr3", ios=ios)
+
+
+def HyperRAMResource(*args, cs_n, dq, rwds, rst_n, clk_p, clk_n=None,
+                    conn=None, diff_attrs=None, attrs=None):
+    resources = []
+
+    l = []
+
+    l.append(Subsignal("cs", PinsN(cs_n, dir="i", conn=conn)))
+    l.append(Subsignal("rst", PinsN(rst_n, dir="i", conn=conn, assert_width=1)))
+    l.append(Subsignal("rwds", Pins(rwds, dir="oe", conn=conn, assert_width=1)))
+    ios.append(Subsignal("dq", Pins(dq, dir="io", conn=conn)))
+
+    if clk_n is not None: # differential
+        cpin = DiffPairs(clk_p, clk_n,dir="o", conn=conn, assert_width=1)
+        l.append(Subsignal("clk", cpin, diff_attrs))
+    else:
+        cpin = Pins(clk_p, dir="o", conn=conn, assert_width=1)
+        l.append(Subsignal("clk", cpin))
+
+    if attrs is not None:
+        l.append(attrs)
+
+    resources.append(Resource.family(*args, default_name="hyperram", ios=l))
+
+    return resources
+
+

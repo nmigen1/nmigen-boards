@@ -3,7 +3,7 @@ import subprocess
 
 from nmigen.build import *
 from nmigen.vendor.xilinx_7series import *
-from .resources import *
+from nmigen_boards.resources import *
 
 
 __all__ = ["ArtyA7_35Platform", "ArtyA7_100Platform"]
@@ -226,5 +226,6 @@ class ArtyA7_100Platform(_ArtyA7Platform):
 
 
 if __name__ == "__main__":
-    from .test.blinky import *
-    ArtyA7_35Platform().build(Blinky(), do_program=True)
+    from nmigen_boards.test.blinky import *
+    ArtyA7_100Platform(toolchain="Symbiflow").build(Blinky(),
+                        do_program=True)
