@@ -196,10 +196,11 @@ def HyperRAMResource(*args, cs_n, dq, rwds, rst_n, ck_p, ck_n=None,
 
     l = []
 
-    l.append(Subsignal("cs", PinsN(cs_n, dir="i", conn=conn)))
-    l.append(Subsignal("rst", PinsN(rst_n, dir="i", conn=conn, assert_width=1)))
+    l.append(Subsignal("cs_n", PinsN(cs_n, dir="o", conn=conn)))
+    l.append(Subsignal("rst_n", PinsN(rst_n, dir="o", conn=conn,
+                                      assert_width=1)))
     l.append(Subsignal("rwds", Pins(rwds, dir="oe", conn=conn, assert_width=1)))
-    ios.append(Subsignal("dq", Pins(dq, dir="io", conn=conn)))
+    l.append(Subsignal("dq", Pins(dq, dir="io", conn=conn)))
 
     if ck_n is not None: # differential
         cpin = DiffPairs(ck_p, ck_n,dir="o", conn=conn, assert_width=1)
