@@ -6,11 +6,10 @@ from nmigen.vendor.lattice_ecp5 import *
 from .resources import *
 
 
-__all__ = ["VersaECP5Platform"]
+__all__ = ["VersaECP5Platform", "VersaECP5Platform85"]
 
 
-class VersaECP5Platform(LatticeECP5Platform):
-    device      = "LFE5UM-45F"
+class _VersaECP5Platform(LatticeECP5Platform):
     package     = "BG381"
     speed       = "8"
     default_clk = "clk100"
@@ -169,6 +168,16 @@ class VersaECP5Platform(LatticeECP5Platform):
                 "-f", config_filename,
                 "-c", "transport select jtag; init; svf -quiet {}; exit".format(vector_filename)
             ])
+
+
+# standard VERSA_ECP5 board supplied factory with a 45F FPGA
+class VersaECP5Platform(_VersaECP5Platform):
+    device      = "LFE5UM-45F"
+
+
+# special custom VERSA_ECP5 board with the FPGA replaced with an 85F
+class VersaECP5Platform85(_VersaECP5Platform):
+    device      = "LFE5UM-85F"
 
 
 if __name__ == "__main__":
