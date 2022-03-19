@@ -190,7 +190,7 @@ def DDR3Resource(*args, rst_n=None, clk_p, clk_n, clk_en, cs_n, we_n, ras_n, cas
     return Resource.family(*args, default_name="ddr3", ios=ios)
 
 
-def HyperRAMResource(*args, cs_n, dq, rwds, rst_n, clk_p, clk_n=None,
+def HyperRAMResource(*args, cs_n, dq, rwds, rst_n, ck_p, ck_n=None,
                     conn=None, diff_attrs=None, attrs=None):
     resources = []
 
@@ -201,12 +201,12 @@ def HyperRAMResource(*args, cs_n, dq, rwds, rst_n, clk_p, clk_n=None,
     l.append(Subsignal("rwds", Pins(rwds, dir="oe", conn=conn, assert_width=1)))
     ios.append(Subsignal("dq", Pins(dq, dir="io", conn=conn)))
 
-    if clk_n is not None: # differential
-        cpin = DiffPairs(clk_p, clk_n,dir="o", conn=conn, assert_width=1)
-        l.append(Subsignal("clk", cpin, diff_attrs))
+    if ck_n is not None: # differential
+        cpin = DiffPairs(ck_p, ck_n,dir="o", conn=conn, assert_width=1)
+        l.append(Subsignal("ck", cpin, diff_attrs))
     else:
-        cpin = Pins(clk_p, dir="o", conn=conn, assert_width=1)
-        l.append(Subsignal("clk", cpin))
+        cpin = Pins(ck_p, dir="o", conn=conn, assert_width=1)
+        l.append(Subsignal("ck", cpin))
 
     if attrs is not None:
         l.append(attrs)
