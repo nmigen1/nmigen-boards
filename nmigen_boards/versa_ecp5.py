@@ -155,7 +155,11 @@ class _VersaECP5Platform(LatticeECP5Platform):
             {% if "5G" in platform.device -%}
             jtag newtap ecp5 tap -irlen 8 -expected-id 0x81112043 ; # LFE5UM5G-45F
             {% else -%}
+            {% if "85F" in platform.device -%}
+            jtag newtap ecp5 tap -irlen 8 -expected-id 0x01113043 ; # LFE5UM-85F
+            {% else -%}
             jtag newtap ecp5 tap -irlen 8 -expected-id 0x01112043 ; # LFE5UM-45F
+            {% endif %}
             {% endif %}
             """
         }
