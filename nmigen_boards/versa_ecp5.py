@@ -54,7 +54,8 @@ class _VersaECP5Platform(LatticeECP5Platform):
         ),
 
         *SPIFlashResources(0,
-            cs_n="R2", clk="U3", miso="W2", mosi="V2", wp_n="Y2", hold_n="W1",
+            cs_n="R2", clk=None, # ECP5 MCLK accessed through USRMCLK Instance
+            miso="W2", mosi="V2", wp_n="Y2", hold_n="W1",
             attrs=Attrs(IO_TYPE="LVCMOS33")
         ),
 

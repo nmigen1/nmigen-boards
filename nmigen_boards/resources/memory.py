@@ -16,7 +16,8 @@ def SPIFlashResources(*args, cs_n, clk, mosi, miso, wp_n=None, hold_n=None,
     if attrs is not None:
         io_all.append(attrs)
     io_all.append(Subsignal("cs",  PinsN(cs_n, dir="o", conn=conn)))
-    io_all.append(Subsignal("clk", Pins(clk, dir="o", conn=conn, assert_width=1)))
+    if clk is not None: # ECP5 must access clk through USRMCLK instance
+        io_all.append(Subsignal("clk", Pins(clk, dir="o", conn=conn, assert_width=1)))
 
     io_1x = list(io_all)
     io_1x.append(Subsignal("mosi", Pins(mosi, dir="o", conn=conn, assert_width=1)))
