@@ -37,7 +37,7 @@ class QuickfeatherPlatform(QuicklogicPlatform):
         ),
         SPIResource(1,
             cs="37", clk="40", mosi="36", miso="42",
-            role="peripheral"
+            role="device"
         ),
 
         I2CResource(0,
