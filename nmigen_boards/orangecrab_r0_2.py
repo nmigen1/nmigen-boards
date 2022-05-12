@@ -51,7 +51,7 @@ class _OrangeCrabR0_2Platform(LatticeECP5Platform):
             Subsignal("cas",     PinsN("D13", dir="o")),
             Subsignal("a", Pins(
                 "C4 D2 D3 A3 A4 D4 C3 B2 B1 D1 A7 C2 B6 C1 A2 C7", dir="o")),
-            Subsignal("ba",      Pins("P5 N3 M3", dir="o")),
+            Subsignal("ba",      Pins("D6 B7 A6", dir="o")),
             Subsignal("dqs",     DiffPairs("G18 H17", "B15 A16", dir="io"),
                       Attrs(IO_TYPE="SSTL135D_I", TERMINATION="OFF",
                       DIFFRESISTOR="100")),
