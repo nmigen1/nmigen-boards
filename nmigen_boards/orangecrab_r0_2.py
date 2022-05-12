@@ -23,9 +23,10 @@ class _OrangeCrabR0_2Platform(LatticeECP5Platform):
 
         # Used to reload FPGA configuration.
         # Can enter USB bootloader by assigning button 0 to program.
-        Resource("program", 0, PinsN("V17", dir="o"), Attrs(IO_TYPE="LVCMOS33")),
+        Resource("program", 0, PinsN("V17", dir="o"),
+                 Attrs(IO_TYPE="LVCMOS33")),
 
-        RGBLEDResource(0, 
+        RGBLEDResource(0,
             r="K4", g="M3", b="J3", invert=True,
             attrs=Attrs(IO_TYPE="LVCMOS33")),
 
@@ -34,25 +35,30 @@ class _OrangeCrabR0_2Platform(LatticeECP5Platform):
             attrs=Attrs(IO_TYPE="SSTL135_I")),
 
         *SPIFlashResources(0,
-            cs_n="U17", clk="U16", miso="T18", mosi="U18", wp_n="R18", hold_n="N18",
+            cs_n="U17", clk="U16",
+            miso="T18", mosi="U18", wp_n="R18", hold_n="N18",
             attrs=Attrs(IO_TYPE="LVCMOS33"),
         ),
 
         Resource("ddr3", 0,
             Subsignal("rst",     PinsN("L18", dir="o")),
-            Subsignal("clk",     DiffPairs("J18", "K18", dir="o"), Attrs(IO_TYPE="SSTL135D_I")),
+            Subsignal("clk",     DiffPairs("J18", "K18", dir="o"),
+                Attrs(IO_TYPE="SSTL135D_I")),
             Subsignal("clk_en",  Pins("D18", dir="o")),
             Subsignal("cs",      PinsN("A12", dir="o")),
             Subsignal("we",      PinsN("B12", dir="o")),
             Subsignal("ras",     PinsN("C12", dir="o")),
             Subsignal("cas",     PinsN("D13", dir="o")),
-            Subsignal("a",       Pins("C4 D2 D3 A3 A4 D4 C3 B2 B1 D1 A7 C2 B6 C1 A2 C7", dir="o")),
+            Subsignal("a", Pins(
+                "C4 D2 D3 A3 A4 D4 C3 B2 B1 D1 A7 C2 B6 C1 A2 C7", dir="o")),
             Subsignal("ba",      Pins("P5 N3 M3", dir="o")),
             Subsignal("dqs",     DiffPairs("G18 H17", "B15 A16", dir="io"),
                       Attrs(IO_TYPE="SSTL135D_I", TERMINATION="OFF",
                       DIFFRESISTOR="100")),
-            Subsignal("dq",      Pins("C17 D15 B17 C16 A15 B13 A17 A13 F17 F16 G15 F15 J16 C18 H16 F18",
-                                      dir="io"), Attrs(TERMINATION="75")),
+            Subsignal("dq",      Pins(
+                "C17 D15 B17 C16 A15 B13 A17 A13 "+
+                "F17 F16 G15 F15 J16 C18 H16 F18",
+                dir="io"), Attrs(TERMINATION="75")),
             Subsignal("dm",      Pins("G16 D16", dir="o")),
             Subsignal("odt",     Pins("C13", dir="o")),
             Attrs(IO_TYPE="SSTL135_I", SLEWRATE="FAST")
@@ -68,16 +74,19 @@ class _OrangeCrabR0_2Platform(LatticeECP5Platform):
         Resource("adc", 0,
             Subsignal("ctrl",     Pins("G1 F1", dir="o")),
             Subsignal("mux",      Pins("F4 F3 F2 H1", dir="o")),
-            Subsignal("sense",    DiffPairs("H3", "G3", dir="i"), Attrs(IO_TYPE="LVCMOS33D")),
+            Subsignal("sense",
+                DiffPairs("H3", "G3", dir="i"), Attrs(IO_TYPE="LVCMOS33D")),
             Attrs(IO_TYPE="LVCMOS33")
         ),
 
         *SDCardResources(0,
-            dat0="J1", dat1="K3", dat2="L3", dat3="M1", clk="K1", cmd="K2", cd="L1",
+            dat0="J1", dat1="K3", dat2="L3", dat3="M1",
+            clk="K1", cmd="K2", cd="L1",
             attrs=Attrs(IO_TYPE="LVCMOS33", SLEWRATE="FAST")
         ),
 
-        DirectUSBResource(0, d_p="N1", d_n="M2", pullup="N2", attrs=Attrs(IO_TYPE="LVCMOS33"))
+        DirectUSBResource(0, d_p="N1", d_n="M2", pullup="N2",
+                          attrs=Attrs(IO_TYPE="LVCMOS33"))
     ]
     connectors = [
         Connector("io", 0, {
