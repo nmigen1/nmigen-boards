@@ -52,9 +52,9 @@ class _OrangeCrabR0_2Platform(LatticeECP5Platform):
             Subsignal("a", Pins(
                 "C4 D2 D3 A3 A4 D4 C3 B2 B1 D1 A7 C2 B6 C1 A2 C7", dir="o")),
             Subsignal("ba",      Pins("D6 B7 A6", dir="o")),
-            Subsignal("dqs",     DiffPairs("G18 H17", "B15 A16", dir="io"),
-                      Attrs(IO_TYPE="SSTL135D_I", TERMINATION="OFF",
-                      DIFFRESISTOR="100")),
+            Subsignal("dqs",     DiffPairs("B15 G18", "A16 H17", dir="io"),
+                      Attrs(IO_TYPE="SSTL135D_I", SLEWRATE="FAST",
+                            TERMINATION="OFF",DIFFRESISTOR="100")),
             Subsignal("dq",      Pins(
                 "C17 D15 B17 C16 A15 B13 A17 A13 "+
                 "F17 F16 G15 F15 J16 C18 H16 F18",
