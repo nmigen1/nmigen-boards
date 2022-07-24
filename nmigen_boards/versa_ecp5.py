@@ -108,7 +108,7 @@ class _VersaECP5Platform(LatticeECP5Platform):
         ),
 
         Resource("ddr3", 0,
-            Subsignal("reset",   PinsN("N4", dir="o"),
+            Subsignal("rst",   PinsN("N4", dir="o"),
                 Attrs(IO_TYPE="SSTL135_I", SLEWRATE="FAST", TERMINATION="OFF")),
             Subsignal("clk",     DiffPairs("M4", "N5", dir="o"),
                 Attrs(IO_TYPE="SSTL135D_I", SLEWRATE="FAST",
