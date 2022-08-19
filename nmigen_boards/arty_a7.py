@@ -213,8 +213,12 @@ class _ArtyA7Platform(Xilinx7SeriesPlatform):
 
     def toolchain_program(self, products, name):
         xc3sprog = os.environ.get("XC3SPROG", "xc3sprog")
+        serialnum = os.environ.get("XC3SPROG_SERIAL", None) # choose device
         with products.extract("{}.bit".format(name)) as bitstream_filename:
-            subprocess.run([xc3sprog, "-c", "nexys4", bitstream_filename], check=True)
+            args = [xc3sprog, "-c", "nexys4", bitstream_filename]
+            if serialnum is not None:
+                args += ['-s', serialnum]
+            subprocess.run(args, check=True)
 
 
 class ArtyA7_35Platform(_ArtyA7Platform):
